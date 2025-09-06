@@ -7,6 +7,8 @@ section .data
 
 ; there's also a bss section where we define variables
 ; for the future or something like that idk
+; the .bss section is variables that we create but we 
+; will initialize them through out the code execution
 
 ; in the .text section is where all of our code will 
 ; be, and also we put our labels a label is a like 
