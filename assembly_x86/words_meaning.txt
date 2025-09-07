@@ -1,2 +1,3 @@
 db -> define bytes
 resb -> reserce bytes
+equ -> equal (symbolic constant, like #define in c)
