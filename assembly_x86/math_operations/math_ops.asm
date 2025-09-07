@@ -10,6 +10,15 @@ section .text
 
 _start:
     mov rax, 3
+
+    mov rbx, 3
+
+    ; operations like mul or div ussually only take
+    ; one parameter, since the operation will be
+    ; stored in rax, for example
+    ; mul rbx -> rax *= rbx
+    mul rbx
+
     call _print_rax_val
 
     mov rax, 60
