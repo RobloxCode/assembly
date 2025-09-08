@@ -11,13 +11,20 @@ section .text
 _start:
     mov rax, 3
 
-    mov rbx, 3
-
     ; operations like mul or div ussually only take
     ; one parameter, since the operation will be
     ; stored in rax, for example
-    ; mul rbx -> rax *= rbx
+    ; mul rbx -> rax = rax * rbx
+    ; also, the instructions mul and div must take a
+    ; register as parameters
+
+    ; if i wanted to multiply i'd use the rbx register and for division we use rcx
+    mov rbx, 2
     mul rbx
+
+    xor rdx, rdx                            ; for division we have to clean the high part
+    mov rcx, 3
+    div rcx
 
     call _print_rax_val
 
