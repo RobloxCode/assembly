@@ -1,0 +1,13 @@
+.stack 100h
+
+.data
+    msg1 db, 'primer mensaje', 10, 13, 36
+
+.code
+    mov ax, @data
+    mov ds, ax
+    mov dx, offset msg1
+    mov ah, 09h
+    int 21h
+
+.exit
