@@ -11,9 +11,9 @@ dollar_sign_char equ 36
               db 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
               db 35,35,35,35,35,35,35,35,35,new_line_char,carriage_ret_char,dollar_sign_char
 
-    lst_shapes_msg db 49,' ',45,62,' Circulo',new_line_char,carriage_ret_char
-                   db 49,' ',45,62,' Cuadrado',new_line_char,carriage_ret_char
-                   db 49,' ',45,62,' Triangulo',new_line_char,carriage_ret_char,dollar_sign_char
+    lst_shapes_msg db 49,' ',45,62,' ','Circulo',new_line_char,carriage_ret_char
+                   db 49,' ',45,62,' ','Cuadrado',new_line_char,carriage_ret_char
+                   db 49,' ',45,62,' ','Triangulo',new_line_char,carriage_ret_char,dollar_sign_char
 
 .code
 start:
@@ -26,7 +26,7 @@ start:
     mov dx, offset lst_shapes_msg
     call _print_dx_val
 
-    call _exit
+    jmp _exit
 
 _print_dx_val proc
     mov ah, 09h
