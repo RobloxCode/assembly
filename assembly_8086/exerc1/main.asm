@@ -28,14 +28,13 @@ start:
 
     jmp _exit
 
-_print_dx_val proc
+_print_dx_val:
     mov ah, 09h
     int 21h
     ret
-_print_dx_val endp
 
-_exit proc
-    mov ah, 4Ch
+_exit:
+    mov ah, 4ch
     int 21h
-_exit endp
+
 
