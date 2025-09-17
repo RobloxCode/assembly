@@ -1,19 +1,16 @@
-new_line_char equ 10
+newline equ 10
 carriage_ret_char equ 13
-dollar_sign_char equ 36
 
 .stack 100h
 
 .data
-    title_msg db 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
-              db 35,35,35,35,35,35,35,35,35,35,new_line_char,carriage_ret_char
-              db 35,'         CALCULADORA        ',35,new_line_char,carriage_ret_char
-              db 35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35
-              db 35,35,35,35,35,35,35,35,35,new_line_char,carriage_ret_char,dollar_sign_char
+    title_msg db '###############################', newline, carriage_ret_char
+              db '#         calculadora         #', newline, carriage_ret_char
+              db '###############################', newline, carriage_ret_char, '$'
 
-    lst_shapes_msg db 49,' ',45,62,' ','Circulo',new_line_char,carriage_ret_char
-                   db 49,' ',45,62,' ','Cuadrado',new_line_char,carriage_ret_char
-                   db 49,' ',45,62,' ','Triangulo',new_line_char,carriage_ret_char,dollar_sign_char
+    lst_shapes_msg db '1 -> circulo', newline,carriage_ret_char
+                   db '2 -> cuadrado', newline, carriage_ret_char
+                   db '3 -> triangulo', newline, carriage_ret_char, '$'
 
 .code
 start:
@@ -36,5 +33,4 @@ _print_dx_val:
 _exit:
     mov ah, 4ch
     int 21h
-
 
