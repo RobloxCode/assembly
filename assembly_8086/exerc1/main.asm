@@ -13,7 +13,6 @@ carriage_ret_char equ 13
                    db '3 -> triangulo', newline, carriage_ret_char, '$'
 
 .code
-start:
     mov ax, @data
     mov ds, ax
 
