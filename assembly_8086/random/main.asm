@@ -4,42 +4,46 @@ carret equ 0dh
 .stack 100h
 
 .data
-    num db "1", newline, carret
+    num db '1'
     counter db 0
 
 .code
     mov ax, @data
     mov ds, ax
 
-    push 5
-    call _print_nxt_num_n_times
+    call _print_loop
 
-    jmp _exit
+    mov ah, 4ch
+    int 21h
 
-_print_al_char:
+_print_al_char proc
     mov ah, 0eh
     int 10h
     ret
+_print_al_char endp
 
-_print_nxt_num_n_times:
-    push bp
-    mov bp, sp
-    mov ax, [bp+4]              ; parameter is now in ax
+_print_loop proc
+    cmp counter, 5
+    jge _done
 
-    cmp counter, ax
-    jge _exit
+    ; we dont need inc byte ptr [counter]
+    ; since counter is defined just as 0 (one single element)
+    ; the compiler already knows its size
+    inc counter
 
-    add counter, 1
-
-    add num, 1
-    mov al, num
+    mov al, [num]
     call _print_al_char
 
-    pop bp
-    ret 2
-
+    mov al, ' '
     call _print_al_char
 
-_exit:
-    mov ah, 4ch
-    int 21h
+    ; in this case we could also amit the byte ptr
+    inc byte ptr [num]
+
+    jmp _print_loop
+
+_done:
+    ret
+
+_print_loop endp
+
