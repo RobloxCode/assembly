@@ -1,5 +1,4 @@
 16 bit DOS assembly with MASN/TASM syntax
-run it -> dosbox -> mount c ~/asm
 
 db -> define byte
 dw -> define word
