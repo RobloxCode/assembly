@@ -71,9 +71,6 @@ newline equ 10
     mov dx, offset invalid_input_msg
     call _print_dx_string
 
-    ; call _fill_user_input_num
-    ; call _aton
-
     _continue:
     mov ax, 4C00h
     int 21h
