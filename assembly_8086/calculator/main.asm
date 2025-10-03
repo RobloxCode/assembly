@@ -78,7 +78,7 @@ newline equ 10
     mov ax, 4C00h
     int 21h
 
-; Parses to from a char to a number
+; Parses from a char to a number
 ; the value stored at user_input_num
 ; and saves it in aton_res
 _aton proc
@@ -143,6 +143,8 @@ _prompt_circle_data proc
     call _print_dx_string
 
     call _fill_user_input_num
+    call _aton
+    mov ax, aton_res
     mov circle_radius, ax
 
     ret
@@ -153,14 +155,16 @@ _prompt_triangle_data proc
     call _print_dx_string
 
     call _fill_user_input_num
+    call _aton
+    mov ax, aton_res
     mov triangle_base, ax
 
     mov dx, offset triangle_prompt_height_msg
     call _print_dx_string
 
-    xor ax, ax
-
     call _fill_user_input_num
+    call _aton
+    mov ax, aton_res
     mov triangle_height, ax
 
     ret
@@ -171,6 +175,8 @@ _prompt_cube_data proc
     call _print_dx_string
 
     call _fill_user_input_num
+    call _aton
+    mov ax, aton_res
     mov cube_side, ax
 
     ret
