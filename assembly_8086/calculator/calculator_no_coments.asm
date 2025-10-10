@@ -4,7 +4,6 @@ newline equ 10
 .stack 100h
 
 .data
-    ; messages
     title_msg db '###################', newline, carret
               db '#   calculadora   #', newline, carret
               db '###################', newline, carret, '$'
@@ -12,23 +11,17 @@ newline equ 10
                    db 'T -> Triangulo', newline, carret
                    db 'c -> Cuadrado', newline, carret, '$'
     choose_shape_msg db 'Escoje la figura: ', '$'
-
     circle_prompt_radius_msg db newline, carret, 'Radio: ', '$'
     triangle_prompt_base_msg db newline, carret, 'Base: ', '$'
     triangle_prompt_height_msg db newline, carret, 'Altura: ', '$'
     cube_prompt_side_msg db newline, carret, 'Lado: ', '$'
-
     invalid_input_msg db newline, carret, 'Caracter invalido', newline, carret, '$'
 
-    ; shapes data
     circle_radius dw ?
-
     triangle_base dw ?
     triangle_height dw ?
-
     cube_side dw ?
 
-    ; parse variables
     user_input_num db 3 dup(?)
     aton_res dw 0
 
@@ -71,16 +64,10 @@ newline equ 10
     mov dx, offset invalid_input_msg
     call _print_dx_string
 
-    ; call _fill_user_input_num
-    ; call _aton
-
     _continue:
     mov ax, 4C00h
     int 21h
 
-; Parses from a char to a number
-; the value stored at user_input_num
-; and saves it in aton_res
 _aton proc
     mov aton_res, 0
 
@@ -181,3 +168,4 @@ _prompt_cube_data proc
 
     ret
 _prompt_cube_data endp
+

@@ -3,3 +3,4 @@
 db -> define byte
 dw -> define word
 dd -> define double
+lea -> load effective address
