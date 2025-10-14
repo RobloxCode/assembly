@@ -12,20 +12,16 @@ newline equ 10
                    db 'T -> Triangulo', newline, carret
                    db 'c -> Cuadrado', newline, carret, '$'
     choose_shape_msg db 'Escoje la figura: ', '$'
-
     circle_prompt_radius_msg db newline, carret, 'Radio: ', '$'
     triangle_prompt_base_msg db newline, carret, 'Base: ', '$'
     triangle_prompt_height_msg db newline, carret, 'Altura: ', '$'
     cube_prompt_side_msg db newline, carret, 'Lado: ', '$'
-
     invalid_input_msg db newline, carret, 'Caracter invalido', newline, carret, '$'
 
     ; shapes data
     circle_radius dw ?
-
     triangle_base dw ?
     triangle_height dw ?
-
     cube_side dw ?
 
     ; parse variables
@@ -33,6 +29,8 @@ newline equ 10
     aton_res dw 0
 
     shape_user_option db ?
+
+    area_res dw ?
 
 .code
     mov ax, @data
@@ -53,18 +51,21 @@ newline equ 10
     cmp shape_user_option, 'C'
     jne _check_triangle
     call _prompt_circle_data
+    call _calculate_circle_area
     jmp _continue
 
     _check_triangle:
     cmp shape_user_option, 'T'
     jne _check_cube
     call _prompt_triangle_data
+    call _calculate_triangle_area
     jmp _continue
 
     _check_cube:
     cmp shape_user_option, 'c'
     jne _invalid_option
     call _prompt_cube_data
+    call _calculate_cube_area
     jmp _continue
 
     _invalid_option:
@@ -74,6 +75,51 @@ newline equ 10
     _continue:
     mov ax, 4C00h
     int 21h
+
+_calculate_triangle_area proc
+    xor ax, ax
+    xor dx, dx
+    xor bx, bx
+
+    mov ax, triangle_base
+    mov bx, triangle_height
+    mul bx
+
+    add area_res, dx
+    add area_res, ax
+
+    mov bx, 2
+    div bx
+
+    mov area_res, ax
+
+    ret
+_calculate_triangle_area endp
+
+_calculate_circle_area proc
+    xor ax, ax
+    xor dx, dx
+    xor bx, bx
+
+
+
+    ret
+_calculate_circle_area endp
+
+_calculate_cube_area proc
+    xor ax, ax
+    xor dx, dx
+    xor bx, bx
+
+    mov ax, cube_side
+    mov bx, cube_side
+    mul bx
+
+    add area_res, dx
+    add area_res, ax
+
+    ret
+_calculate_cube_area endp
 
 ; Parses from a char to a number
 ; the value stored at user_input_num
