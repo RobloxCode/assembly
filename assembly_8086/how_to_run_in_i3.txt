@@ -1,0 +1,7 @@
+use this command when wanting to run the emulator
+in the i3wm
+wine ~/Downloads/emu8086.exe
+
+this is the license btw:
+User: ISHAAN,glaitm
+Key: 27R3VDEFYFX4N0VC3FRTQZX
