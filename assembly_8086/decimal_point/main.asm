@@ -7,15 +7,38 @@
     div_res db ?
     div_rem db ?
 
+    radius dw 12
+    circle_area_before_point_str db 3 dup(?)
+    circle_area_after_point_str db 3 dup(?)
+    circle_area_before_point_int dw ?
+    circle_area_after_point_int dw ?
+
 .code
     mov ax, @data
     mov ds, ax
 
-    mov ax, num_int
-    call _print_2_digit_num
+    mov ax, radius
+    call _get_circle_area
 
     mov ah, 4ch
     int 21h
+
+; AX = radius
+_get_circle_area proc
+    mov bx, ax
+    mul bx
+
+    mov bx, 22
+    mul bx
+
+    mov bx, 7
+    div bx
+
+    add circle_area_before_point_int, ax
+    mov circle_area_after_point_int, dx
+
+    ret
+_get_circle_area endp
 
 _print_dx_val proc
     mov ah, 9

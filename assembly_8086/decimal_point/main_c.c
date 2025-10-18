@@ -1,26 +1,27 @@
 #include <stdio.h>
 
-float div(int num1, int num2) {
-    return (float)num1 / (float)num2;
+float _get_circle_area(int radius) {
+    return radius * radius * 3.141592;
 }
 
-void div_int(int num1, int num2, int* res, int* dec_part) {
-    *res = num1 / num2;
-    *dec_part = num1 % num2;
+void _get_circle_area_no_fl(int radius, int* res_out, int* rem) {
+    *res_out = radius * radius * 22;
+    *res_out /= 7;
+    *rem = (radius * radius * 22) % 7;
 }
 
 int main(void) {
-    int num1 = 4;
-    int num2 = 3;
+    int radius = 12;
 
-    printf("%d / %d = %.2f\n", num1, num2, div(num1, num2));
+    printf("area: %.2f\n", _get_circle_area(radius));
 
-    int res = 0;
-    int dec_part = 0;
-    div_int(num1, num2, &res, &dec_part);
-    printf("%d / %d = %d.%d\n", num1, num2, res, dec_part);
+    // without using float
 
-    printf("%d", 4 % 3);
+    int area = 0;
+    int rem = 0;
+
+    _get_circle_area_no_fl(radius, &area, &rem);
+    printf("area: %d.%d\n", area, rem);
 
     return 0;
 }
