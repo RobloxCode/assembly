@@ -30,7 +30,8 @@ newline equ 10
 
     shape_user_option db ?
 
-    area_res dw ?
+    area_res dw 0
+    area_rem dw 0
 
 .code
     mov ax, @data
@@ -77,39 +78,42 @@ newline equ 10
     int 21h
 
 _calculate_triangle_area proc
-    xor ax, ax
     xor dx, dx
-    xor bx, bx
 
     mov ax, triangle_base
     mov bx, triangle_height
     mul bx
 
-    add area_res, dx
-    add area_res, ax
-
     mov bx, 2
     div bx
 
     mov area_res, ax
+    mov area_rem, dx
 
     ret
 _calculate_triangle_area endp
 
 _calculate_circle_area proc
-    xor ax, ax
     xor dx, dx
-    xor bx, bx
 
+    mov ax, circle_radius
+    mov bx, circle_radius
+    mul bx
 
+    mov bx, 22
+    mul bx
+
+    mov bx, 7
+    div bx
+
+    mov area_res, ax
+    mov area_rem, dx
 
     ret
 _calculate_circle_area endp
 
 _calculate_cube_area proc
-    xor ax, ax
     xor dx, dx
-    xor bx, bx
 
     mov ax, cube_side
     mov bx, cube_side

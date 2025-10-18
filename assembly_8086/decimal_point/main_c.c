@@ -11,7 +11,7 @@ void _get_circle_area_no_fl(int radius, int* res_out, int* rem) {
 }
 
 int main(void) {
-    int radius = 12;
+    int radius = 123;
 
     printf("area: %.2f\n", _get_circle_area(radius));
 
