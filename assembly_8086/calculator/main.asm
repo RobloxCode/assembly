@@ -224,8 +224,21 @@ _print_single_al_char proc
 _print_single_al_char endp
 
 _print_dx_string proc
+    mov bx, dx
+    mov si, 0
+
+    skip_zeros:
+        cmp byte ptr [bx + si], '0'
+        jne _print
+
+        inc si
+        jmp skip_zeros
+
+    _print:
+    add dx, si
     mov ah, 09h
     int 21h
+
     ret
 _print_dx_string endp
 
