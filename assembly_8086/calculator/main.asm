@@ -35,7 +35,7 @@ newline equ 10
     area_res dw 0
     area_rem dw 0
 
-    ntoa_res db 4 dup(?)
+    ntoa_res db 6 dup(?)
 
 .code
     mov ax, @data
@@ -104,7 +104,7 @@ newline equ 10
 _ntoa proc
     xor dx, dx
 
-    mov bx, 100
+    mov bx, 10000
     div bx
 
     add ax, '0'
@@ -112,17 +112,35 @@ _ntoa proc
 
     mov ax, dx
     xor dx, dx
-    mov bx, 10
+    mov bx, 1000
 
     div bx
+
     add ax, '0'
     mov [ntoa_res + 1], al
 
     mov ax, dx
+    xor dx, dx
+    mov bx, 100
+
+    div bx
+
     add ax, '0'
     mov [ntoa_res + 2], al
 
-    mov [ntoa_res + 3], '$'
+    mov ax, dx
+    xor dx, dx
+    mov bx, 10
+
+    div bx
+    add ax, '0'
+    mov [ntoa_res + 3], al
+
+    mov ax, dx
+    add ax, '0'
+    mov [ntoa_res + 4], al
+
+    mov [ntoa_res + 5], '$'
 
     ret
 _ntoa endp
@@ -150,10 +168,10 @@ _calculate_circle_area proc
     mov bx, circle_radius
     mul bx
 
-    mov bx, 22
+    mov bx, 314
     mul bx
 
-    mov bx, 7
+    mov bx, 100
     div bx
 
     mov area_res, ax
