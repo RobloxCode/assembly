@@ -16,7 +16,9 @@ newline equ 10
     triangle_prompt_base_msg db newline, carret, 'Base: ', '$'
     triangle_prompt_height_msg db newline, carret, 'Altura: ', '$'
     cube_prompt_side_msg db newline, carret, 'Lado: ', '$'
+    area_result_msg db newline, carret, 'Area: ', '$'
     invalid_input_msg db newline, carret, 'Caracter invalido', newline, carret, '$'
+    decimal_point_char db '.', '$'
 
     ; shapes data
     circle_radius dw ?
@@ -32,6 +34,8 @@ newline equ 10
 
     area_res dw 0
     area_rem dw 0
+
+    ntoa_res db 4 dup(?)
 
 .code
     mov ax, @data
@@ -74,8 +78,54 @@ newline equ 10
     call _print_dx_string
 
     _continue:
+    mov dx, offset area_result_msg
+    call _print_dx_string
+
+    mov ax, area_res
+    call _ntoa
+
+    mov dx, offset ntoa_res
+    call _print_dx_string
+
+    mov dx, offset decimal_point_char
+    call _print_dx_string
+
+    mov ax, area_rem
+    call _ntoa
+
+    mov dx, offset ntoa_res
+    call _print_dx_string
+
     mov ax, 4C00h
     int 21h
+
+; AX = number to parse to ascii
+; it will store the result in ntoa_res
+_ntoa proc
+    xor dx, dx
+
+    mov bx, 100
+    div bx
+
+    add ax, '0'
+    mov [ntoa_res], al
+
+    mov ax, dx
+    xor dx, dx
+    mov bx, 10
+
+    div bx
+    add ax, '0'
+    mov [ntoa_res + 1], al
+
+    mov ax, dx
+    add ax, '0'
+    mov [ntoa_res + 2], al
+
+    mov [ntoa_res + 3], '$'
+
+    ret
+_ntoa endp
 
 _calculate_triangle_area proc
     xor dx, dx
@@ -228,4 +278,3 @@ _prompt_cube_data proc
 
     ret
 _prompt_cube_data endp
-

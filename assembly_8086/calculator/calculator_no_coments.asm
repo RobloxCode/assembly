@@ -65,8 +65,42 @@ newline equ 10
     call _print_dx_string
 
     _continue:
+
+    mov ax, 
+    call _ntoa
+
+
     mov ax, 4C00h
     int 21h
+
+
+; AX = number to parse to ascii
+; it will store the result in ntoa_res
+_ntoa proc
+    xor dx, dx
+
+    mov bx, 100
+    div bx
+
+    add ax, '0'
+    mov [ntoa_res], al
+
+    mov ax, dx
+    xor dx, dx
+    mov bx, 10
+
+    div bx
+    add ax, '0'
+    mov [ntoa_res + 1], al
+
+    mov ax, dx
+    add ax, '0'
+    mov [ntoa_res + 2], al
+
+    mov [ntoa_res + 3], '$'
+
+    ret
+_ntoa endp
 
 _aton proc
     mov aton_res, 0

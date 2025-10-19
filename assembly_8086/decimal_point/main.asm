@@ -1,8 +1,8 @@
 .stack 100h
 
 .data
-    num_str db '13$'
-    num_int dw 13
+    num_str db '132$'
+    num_int dw 132
 
     div_res db ?
     div_rem db ?
@@ -13,15 +13,49 @@
     circle_area_before_point_int dw ?
     circle_area_after_point_int dw ?
 
+    ntoa_res db 4 dup(?)
+    cur_rem dw 0
+
 .code
     mov ax, @data
     mov ds, ax
 
-    mov ax, radius
-    call _get_circle_area
+    mov ax, num_int
+    call _ntoa
+
+    lea dx, ntoa_res
+    call _print_dx_val
 
     mov ah, 4ch
     int 21h
+
+; AX = number to parse to ascii
+; it will store the result in ntoa_res
+_ntoa proc
+    xor dx, dx
+
+    mov bx, 100
+    div bx
+
+    add ax, '0'
+    mov [ntoa_res], al
+
+    mov ax, dx
+    xor dx, dx
+    mov bx, 10
+
+    div bx
+    add ax, '0'
+    mov [ntoa_res + 1], al
+
+    mov ax, dx
+    add ax, '0'
+    mov [ntoa_res + 2], al
+
+    mov [ntoa_res + 3], '$'
+
+    ret
+_ntoa endp
 
 ; AX = radius
 _get_circle_area proc
