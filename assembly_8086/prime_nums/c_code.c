@@ -14,11 +14,20 @@ int is_prime(int num) {
     return 1;
 }
 
-
 int main(void) {
-    printf("%d, is prime: %d\n", 1, is_prime(1));
-    printf("%d, is prime: %d\n", 2, is_prime(2));
-    printf("%d, is prime: %d\n", 3, is_prime(3));
-    printf("%d, is prime: %d\n", 4, is_prime(4));
+    int top_range_num = 0;
+
+    printf("Type a 3 digit number: ");
+    scanf("%d", &top_range_num);
+
+    printf("[ ");
+    for (int i = 2; i <= top_range_num; ++i) {
+        if (is_prime(i)) {
+            printf("%d ", i);
+        }
+    }
+    printf("]\n");
+
     return 0;
 }
+
