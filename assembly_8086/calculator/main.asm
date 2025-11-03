@@ -1,6 +1,11 @@
 carret equ 13
 newline equ 10
 
+PRINT_CHAR_INT equ 0eh
+PRINT_STR_INT equ 09h
+STDI_INT equ 01h
+EXIT_INT equ 4ch
+
 .stack 100h
 
 .data
@@ -96,7 +101,7 @@ newline equ 10
     mov dx, offset ntoa_res
     call _print_dx_string
 
-    mov ax, 4C00h
+    mov ax, EXIT_INT
     int 21h
 
 ; AX = number to parse to ascii
@@ -107,7 +112,7 @@ _ntoa proc
     mov bx, 10000
     div bx
 
-    add ax, '0'
+    add al, '0'
     mov [ntoa_res], al
 
     mov ax, dx
@@ -116,7 +121,7 @@ _ntoa proc
 
     div bx
 
-    add ax, '0'
+    add al, '0'
     mov [ntoa_res + 1], al
 
     mov ax, dx
@@ -125,7 +130,7 @@ _ntoa proc
 
     div bx
 
-    add ax, '0'
+    add al, '0'
     mov [ntoa_res + 2], al
 
     mov ax, dx
@@ -133,11 +138,11 @@ _ntoa proc
     mov bx, 10
 
     div bx
-    add ax, '0'
+    add al, '0'
     mov [ntoa_res + 3], al
 
     mov ax, dx
-    add ax, '0'
+    add al, '0'
     mov [ntoa_res + 4], al
 
     mov [ntoa_res + 5], '$'
@@ -220,15 +225,15 @@ _aton proc
 _aton endp
 
 _fill_user_input_num proc
-    mov ah, 1
+    mov ah, STDI_INT
     int 21h
     mov [user_input_num], al
 
-    mov ah, 1
+    mov ah, STDI_INT
     int 21h
     mov [user_input_num + 1], al
 
-    mov ah, 1
+    mov ah, STDI_INT
     int 21h
     mov [user_input_num + 2], al
 
@@ -236,7 +241,7 @@ _fill_user_input_num proc
 _fill_user_input_num endp
 
 _print_single_al_char proc
-    mov ah, 0Eh
+    mov ah, PRINT_CHAR_INT
     int 10h
     ret
 _print_single_al_char endp
@@ -254,14 +259,14 @@ _print_dx_string proc
 
     _print:
     add dx, si
-    mov ah, 09h
+    mov ah, PRINT_STR_INT
     int 21h
 
     ret
 _print_dx_string endp
 
 _store_char_input_in_al proc
-    mov ah, 1
+    mov ah, STDI_INT
     int 21h
     ret
 _store_char_input_in_al endp
