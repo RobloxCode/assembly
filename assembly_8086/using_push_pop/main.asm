@@ -22,13 +22,26 @@ EXIT_PROGRAM_INT equ 4ch
     mov bx, 9
     call print_nums
 
-    ; is this the right way of comparing?
-    lea bx, arr
-    mov si, 2
-    cmp [bx + si], 1
-    call print_yes_msg
-    call print_no_msg
+    ; in si we multiply by 2 since, when we use the
+    ; + operator in here, itll increase by a byte and
+    ; the arr in a defined by dw so we gotta shift
+    ; twice to make up for the bytes
 
+    lea bx, arr
+    mov si, 4
+    cmp word ptr [bx + si*2], 4
+    je print_yes_msg_comparison
+    jne print_no_msg_comparison
+
+    print_yes_msg_comparison:
+        call print_yes_msg
+        jmp continue
+
+    print_no_msg_comparison:
+        call print_no_msg
+        jmp continue
+
+    continue:
     mov ah, EXIT_PROGRAM_INT
     int 21h
 
