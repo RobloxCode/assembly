@@ -7,6 +7,7 @@ newline equ 10
     msg db 'escribe un numero de 3 digitos: $', newline, carret
     char_num db 3 dup(?)
     int_num dw 0
+    bin_str_rep db 16 dup(?), 0
 
 .code
     mov ax, @data
@@ -26,6 +27,12 @@ newline equ 10
 
     mov al, carret
     int 10h
+
+    mov ax, int_num
+    call to_binary
+
+    lea dx, bin_str_rep
+    call print_dx_val
 
     mov si, 2
     print_nums_loop:
@@ -167,5 +174,26 @@ to_num proc
     add int_num, ax
     ret
 to_num endp
+
+; AX = number in decimal to convert to binary
+; OUTPUT, the result will be stored at bin_str_rep
+to_binary proc
+    lea bx, bin_str_rep
+    mov si, 15
+    mov cx, 2
+
+    conversion_loop:
+        xor dx, dx
+        div cx
+        add dl, '0'
+        mov [bx + si], dl
+
+        dec si
+        cmp si, 0
+        jne conversion_loop
+
+    exit:
+        ret
+to_binary endp
 
 end
