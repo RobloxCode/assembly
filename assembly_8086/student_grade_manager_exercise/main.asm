@@ -39,8 +39,9 @@ main proc
     mov ax, @data
     mov ds, ax
     
-    ; your main loop here
-    call display_menu
+    ; call display_menu
+    mov bx, 53871
+    call print_number
     ; get user choice
     ; call appropriate procedure based on choice
     
@@ -116,7 +117,7 @@ search_student endp
 
 ; helper procedures you might need:
 
-; input: dx = offset of string
+; params: dx = offset of string
 print_string proc
     push ax
     mov ah, PRINT_STR_INT
@@ -131,10 +132,29 @@ get_number proc
     ret
 get_number endp
 
-; input: bx = number to print
+; params: bx = number to print
 print_number proc
-    ; convert number to ascii and print
-    ; practice: division, modulo, ascii conversion, stack usage
+    mov cx, 0
+    mov ax, bx
+    mov bx, 10
+
+    division_loop:
+        xor dx, dx
+        div bx
+        inc cx
+        push dx
+
+        cmp ax, 0
+        je print_loop
+        jmp division_loop
+
+    print_loop:
+        pop ax
+        add al, '0'
+        mov ah, 0eh
+        int 10h
+        loop print_loop
+
     ret
 print_number endp
 
